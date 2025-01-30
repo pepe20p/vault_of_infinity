@@ -2,11 +2,11 @@ class_name Player extends CharacterBody2D
 
 var cardinal : Vector2 = Vector2.DOWN
 var direction : Vector2 = Vector2.ZERO
-const speed : float = 100
+const speed : float = 500
 const dash_speed : float = 1700
 
 
-var state : String = "ocioso"
+var state : String = "idle"
 var dash : bool = false
 var pode_dash: bool = true
 
@@ -26,7 +26,6 @@ func _process(delta: float) -> void:
 	
 	if Input.get_action_strength("dash") and pode_dash:
 		dash = true
-		#print("deu dash")
 		$Timer_dash_duracao.start()
 		$Timer_dash_cooldown.start()
 	
@@ -35,7 +34,8 @@ func _process(delta: float) -> void:
 		pode_dash = false
 	else:
 		velocity = direction.normalized() * speed
-	if DefineDirecao() == true: 
+		
+	if DefineEstado() || DefineDirecao(): 
 		AtualizaAnimacao()
 	pass
 
@@ -50,30 +50,23 @@ func DefineDirecao() -> bool:
 		nova_dir = Vector2.UP if direction.y < 0 else Vector2.DOWN
 	if direction.y == 0:
 		nova_dir = Vector2.LEFT if direction.x < 0  else Vector2.RIGHT
-	
-		
 	if nova_dir == cardinal:
 		return false
 	cardinal = nova_dir
-	sprite.scale.x = 1 if cardinal == Vector2.LEFT else -1
+	sprite.scale.x = -1 if cardinal == Vector2.LEFT else 1
 	return true
 
 func DefineEstado() -> bool:
+	var novo_estado : String = "idle" if direction == Vector2.ZERO else "andar"
+	if novo_estado == state:
+		return false
+	state = novo_estado
 	return true
 
 func AtualizaAnimacao() -> void:
 	#print(DirecaoAnimacao())
-	#animation_player.play(DirecaoAnimacao(),)
-	if DirecaoAnimacao() == "cima": sprite.frame = 0
-	elif DirecaoAnimacao() == "baixo": sprite.frame = 1
-	else: sprite.frame = 2
+	animation_player.play(state)
 	pass
-
-func DirecaoAnimacao() -> String:
-	if cardinal == Vector2.DOWN: return "baixo"
-	elif cardinal == Vector2.UP: return "cima"
-	else: return "horizontal"
-
 
 func _on_timer_dash_duracao_timeout() -> void:
 	dash = false
