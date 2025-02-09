@@ -35,6 +35,7 @@ func Inicializar(_player : Player) -> void:
 		process_mode = Node.PROCESS_MODE_INHERIT
 
 func TrocaEstado(novo_estado : Estado) -> void:
+	#print(estado_atual,novo_estado)
 	if novo_estado == null || novo_estado == estado_atual: return
 	
 	if estado_atual:

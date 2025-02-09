@@ -1,0 +1,218 @@
+[gd_scene load_steps=17 format=3 uid="uid://b6nr4m1ytdwaf"]
+
+[ext_resource type="Script" path="res://player/scripts/player.gd" id="1_s1ujw"]
+[ext_resource type="Texture2D" uid="uid://d2hnunknxmkw3" path="res://player/sprites/arqueiro.png" id="2_ylx16"]
+[ext_resource type="Texture2D" uid="uid://c3qvbdml2djjs" path="res://player/sprites/dash.png" id="3_jjbex"]
+[ext_resource type="Script" path="res://player/scripts/maquina_estados_jogador.gd" id="4_ar4ud"]
+[ext_resource type="Script" path="res://player/scripts/estado_idle.gd" id="5_papfi"]
+[ext_resource type="Script" path="res://player/scripts/estado_andar.gd" id="6_0pur5"]
+[ext_resource type="Script" path="res://player/scripts/estado_dash.gd" id="7_7bq4t"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_yujph"]
+
+[sub_resource type="Animation" id="Animation_qhgd1"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SpriteJogador:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SpriteJogador/SpriteDash:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_roxdm"]
+resource_name = "andar"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SpriteJogador:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [22, 23, 24, 25, 26, 27, 28, 29]
+}
+
+[sub_resource type="Animation" id="Animation_10yfg"]
+resource_name = "atacar"
+length = 1.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SpriteJogador:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21]
+}
+
+[sub_resource type="Animation" id="Animation_g8re6"]
+resource_name = "dash"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SpriteJogador:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [22, 23, 24, 25, 26, 27, 28, 29]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SpriteJogador/SpriteDash:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.00133334, 0.0673333, 0.133333, 0.198, 0.264, 0.331333, 0.400667, 0.466667, 0.532667, 0.597333, 0.663333, 0.730667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 0]
+}
+
+[sub_resource type="Animation" id="Animation_g4eec"]
+resource_name = "hit"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SpriteJogador:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [33, 34, 35, 36, 37]
+}
+
+[sub_resource type="Animation" id="Animation_ymgwr"]
+resource_name = "idle"
+length = 1.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SpriteJogador:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.32, 0.64, 0.96, 1.28),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4]
+}
+
+[sub_resource type="Animation" id="Animation_4i6fd"]
+resource_name = "morrer"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SpriteJogador:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [44, 45, 46, 47, 48, 49]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_dr66v"]
+_data = {
+"RESET": SubResource("Animation_qhgd1"),
+"andar": SubResource("Animation_roxdm"),
+"atacar": SubResource("Animation_10yfg"),
+"dash": SubResource("Animation_g8re6"),
+"hit": SubResource("Animation_g4eec"),
+"idle": SubResource("Animation_ymgwr"),
+"morrer": SubResource("Animation_4i6fd")
+}
+
+[node name="player" type="CharacterBody2D"]
+collision_mask = 16
+motion_mode = 1
+script = ExtResource("1_s1ujw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+texture_filter = 1
+position = Vector2(-7.5, 26)
+shape = SubResource("CircleShape2D_yujph")
+
+[node name="Timer_dash_duracao" type="Timer" parent="."]
+wait_time = 0.05
+
+[node name="SpriteJogador" type="Sprite2D" parent="."]
+texture = ExtResource("2_ylx16")
+hframes = 11
+vframes = 5
+
+[node name="SpriteDash" type="Sprite2D" parent="SpriteJogador"]
+modulate = Color(0.996078, 0.996078, 0.996078, 0.572549)
+z_index = -1
+z_as_relative = false
+position = Vector2(-5, 22)
+rotation = -3.09447
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_jjbex")
+offset = Vector2(-65.7112, 0.143913)
+flip_h = true
+hframes = 6
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_dr66v")
+}
+autoplay = "horizontal"
+
+[node name="Timer_dash_cooldown" type="Timer" parent="."]
+wait_time = 0.2
+
+[node name="MaquinaEstados" type="Node" parent="."]
+script = ExtResource("4_ar4ud")
+
+[node name="Idle" type="Node" parent="MaquinaEstados"]
+script = ExtResource("5_papfi")
+
+[node name="Andar" type="Node" parent="MaquinaEstados"]
+script = ExtResource("6_0pur5")
+
+[node name="Atacar" type="Node" parent="MaquinaEstados"]
+
+[node name="Dash" type="Node" parent="MaquinaEstados"]
+script = ExtResource("7_7bq4t")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[connection signal="timeout" from="Timer_dash_duracao" to="." method="_on_timer_dash_duracao_timeout"]
+[connection signal="timeout" from="Timer_dash_cooldown" to="." method="_on_timer_dash_cooldown_timeout"]

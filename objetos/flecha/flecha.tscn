@@ -1,0 +1,56 @@
+[gd_scene load_steps=8 format=3 uid="uid://pl6crkjffkx2"]
+
+[ext_resource type="Texture2D" uid="uid://bm86uhfy77v2i" path="res://objetos/flecha/sprite/Arrows_pack.png" id="1_3l0ui"]
+[ext_resource type="Script" path="res://objetos/flecha/scripts/flecha.gd" id="1_v6mo4"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yx1ms"]
+atlas = ExtResource("1_3l0ui")
+region = Rect2(0, 3072, 1023, 1024)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_18rkf"]
+atlas = ExtResource("1_3l0ui")
+region = Rect2(1023, 3072, 1023, 1024)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kkvx1"]
+atlas = ExtResource("1_3l0ui")
+region = Rect2(2046, 3072, 1023, 1024)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_l5t5b"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yx1ms")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_18rkf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kkvx1")
+}],
+"loop": true,
+"name": &"default",
+"speed": 20.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tghxu"]
+size = Vector2(28.375, 7.5)
+
+[node name="flecha" type="Area2D"]
+position = Vector2(0, 2)
+collision_mask = 3
+script = ExtResource("1_v6mo4")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.05, 0.05)
+sprite_frames = SubResource("SpriteFrames_l5t5b")
+frame_progress = 0.991227
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(-2, 1)
+scale = Vector2(1.4, 0.4)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-2, 1)
+shape = SubResource("RectangleShape2D_tghxu")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

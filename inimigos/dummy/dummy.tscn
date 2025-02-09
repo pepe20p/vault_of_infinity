@@ -1,0 +1,74 @@
+[gd_scene load_steps=8 format=3 uid="uid://crq3sph7r1scv"]
+
+[ext_resource type="Texture2D" uid="uid://obk1a8cha5t5" path="res://inimigos/dummy/sprite/dummy.png" id="1_dalyx"]
+[ext_resource type="Texture2D" uid="uid://ct1qasa2iwy73" path="res://inimigos/dummy/sprite/Shadow.png" id="2_5dka1"]
+
+[sub_resource type="Animation" id="Animation_43dar"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_qcvv2"]
+resource_name = "hit"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [5, 6, 7, 8, 9]
+}
+
+[sub_resource type="Animation" id="Animation_qk6a3"]
+resource_name = "idle"
+loop_mode = 1
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_na8tr"]
+_data = {
+"RESET": SubResource("Animation_43dar"),
+"hit": SubResource("Animation_qcvv2"),
+"idle": SubResource("Animation_qk6a3")
+}
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_d1qb7"]
+radius = 5.0
+
+[node name="Dummy" type="StaticBody2D" groups=["Inimigo"]]
+collision_layer = 2
+collision_mask = 3
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_dalyx")
+hframes = 5
+vframes = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D"]
+libraries = {
+"": SubResource("AnimationLibrary_na8tr")
+}
+autoplay = "idle"
+speed_scale = 1.5
+
+[node name="Sprite2D" type="Sprite2D" parent="Sprite2D"]
+modulate = Color(0.129412, 0.129412, 0.129412, 0.607843)
+show_behind_parent = true
+position = Vector2(1, 23.5)
+texture = ExtResource("2_5dka1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 7)
+shape = SubResource("CapsuleShape2D_d1qb7")
